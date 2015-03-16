@@ -1,0 +1,14 @@
+#wp-tables, .row { margin-top: 20px; }
+.wp-table ul { min-height: 20px; }
+
+#others { float: right; }
+
+textarea {
+  overflow-x: hidden;
+  overflow-y: auto;
+  resize: none;
+}
+
+.panel-title {
+  font-weight: bold;
+}

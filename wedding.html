@@ -3,89 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Wedding Planner</title>
+    <!-- jQuery UI CSS -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="style/wedding.css">
+    <!-- jQuery -->
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <!-- jQuery UI -->
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
+    <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <style>
-      #wp-tables, .row { margin-top: 20px; }
-      .wp-table ul { min-height: 20px; }
-      .btn-remove { position: absolute; right: 20px; top: 8px; }
-    </style>
-    <script>
-    $(function() {
-      $(".draggable").draggable({ scroll: true,  scrollSpeed: 100, scrollSensitivity: 100 });
-    });
-    $(function() {
-      $(".sortable").sortable({ connectWith: ['.connectedSortable'] });
-    });
+    <!-- Custom JS -->
+    <script src="script/wedding.js"></script>
 
-    function add_person(name, $list) {
-      console.log('add person', name);
-      return $("<li class='list-group-item'>"+name+"</li>").appendTo($list);
-    }
-
-    function add_table(name, canvas) {
-      console.log('add table', name);
-      return $("<div class='wp-table draggable col-xs-3'> \
-          <div class='panel panel-default'> \
-            <div class='panel-heading'> \
-              <h3 class='panel-title'>"+name+"</h3> \
-              <button type='button' class='btn btn-xs btn-default btn-remove'> \
-                <span class='glyphicon glyphicon-remove' aria-hidden='true'></span> \
-              </button> \
-            </div> \
-            <div class='panel-body'> \
-              <ul class='sortable connectedSortable list-group'> \
-              </ul> \
-              <div class='form-group has-feedback'> \
-                <input type='text' class='form-control add-person' placeholder='Add person' /> \
-                <i class='glyphicon glyphicon-user form-control-feedback'></i> \
-              </div> \
-            </div> \
-          </div> \
-        </div>").appendTo(canvas);
-    }
-
-    $(document).ready(function() {
-      // add a table
-      $("#btn-add-table").keypress(function(e){
-        $el = $(e.target);
-        if (e.which == 13) {
-          $table = add_table($el.val(), "#wp-tables .draggable-tables")
-          // TODO
-          $(".draggable").draggable({ scroll: true,  scrollSpeed: 100, scrollSensitivity: 100 });
-          $(".sortable").sortable({ connectWith: ['.connectedSortable'] });
-          // BAD
-          $table.find(".btn-remove").click(function(e){
-            $(e.target).parents(".wp-table").remove();
-          });
-          $table.find(".add-person").keypress(function(e){
-            if (e.which == 13) {
-              add_person($(e.target).val(), $(e.target).parent().siblings('.sortable'))
-            }
-          });
-        }
-      });
-
-      // remove a table
-      $("#draggable2 .btn-remove").click(function(e){
-        $(e.target).parents(".wp-table").remove();
-      });
-
-      // add a person
-      $("#draggable2 .add-person").keypress(function(e){
-        if (e.which == 13) {
-          add_person($(e.target).val(), $(e.target).parent().siblings('.sortable'))
-        }
-      });
-
-
-    });
-    </script>
   </head>
   <body>
     <div class="container">
@@ -99,9 +31,9 @@
             <li role="presentation"><a href="#">Tables</a></li>
             <li role="presentation"><a href="#">View</a></li>
           </ul>
-        -->
+          -->
 
-          <div id="wp-tables" class="row col-xs-12">
+          <div id="wp-tables" class="row col-xs-9">
             
             <div class='form-group has-feedback'>
               <input type='text' id='btn-add-table' class='form-control' placeholder='Add table...' />
@@ -113,15 +45,25 @@
               <div id="draggable2" class='draggable wp-table col-xs-3' >
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">Table 2</h3>
-                    <button type="button" class='btn btn-xs btn-default btn-remove'>
+                    <span class="panel-title">Table 2</span>
+                    <button type="button" class='btn btn-xs btn-default btn-remove pull-right'>
                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
                   </div>
                   <div class="panel-body">
                     <ul id='sortable2' class="sortable connectedSortable list-group">
-                      <li class="list-group-item">Daniel</li>
-                      <li class="list-group-item">Tatiana</li>
+                      <li class="list-group-item">
+                        Daniel
+                        <button type="button" class='btn btn-xs btn-default btn-rm-guest pull-right'>
+                          <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                        </button>
+                      </li>
+                      <li class="list-group-item">
+                        Tatiana
+                        <button type="button" class='btn btn-xs btn-default btn-rm-guest pull-right'>
+                          <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                        </button>
+                      </li>
                     </ul>
                     <div class='form-group has-feedback'>
                       <input type='text' class='add-person form-control' placeholder='Add person' />
@@ -134,10 +76,51 @@
             <!-- End tables -->
             </div>
 
-            
           </div>
 
+          <div id="others" class='row wp-table col-xs-3' >
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Remaining</h3>
+                
+              </div>
+              <div class="panel-body">
+                <ul class="sortable connectedSortable list-group">
+                </ul>
+                
+                <div class='form-group has-feedback'>
+                  <input type='text' class='add-person form-control' placeholder='Add person' />
+                  <i class='glyphicon glyphicon-user form-control-feedback'></i>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                  Import
+                </button>
+              </div>
+            </div>
+          </div>
+          
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Import guests</h4>
+              </div>
+              <div class="modal-body">
+                <textarea cols="60" rows="20"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="import-guests" type="button" class="btn btn-primary" data-dismiss="modal">Import</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </body>
